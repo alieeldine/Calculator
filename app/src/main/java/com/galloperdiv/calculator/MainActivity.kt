@@ -14,6 +14,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun btnNumberEvent(view: View) {
+        if (isNewOp == true) etShowNumber.setText("")
+        isNewOp = false
+
         val btnSelect = view as Button
         var btnClickValue:String = etShowNumber.text.toString()
 
@@ -35,5 +38,45 @@ class MainActivity : AppCompatActivity() {
         }
 
         etShowNumber.setText(btnClickValue)
+    }
+
+    var op = "*"
+    var oldNumber = ""
+    var isNewOp = true
+
+    fun btnOpEvent(view: View) {
+        val btnSelect = view as Button
+        when (btnSelect.id) {
+            btnDiv.id -> op = "/"
+            btnMul.id -> op = "*"
+            btnSub.id -> op = "-"
+            btnSum.id -> op = "+"
+        }
+        oldNumber = etShowNumber.text.toString()
+        isNewOp = true
+    }
+
+    fun btnEqual(view: View) {
+        val newNumber = etShowNumber.text.toString()
+        var finalNumber:Double ?= null
+        when (op) {
+            "/" -> finalNumber = oldNumber.toDouble()  / newNumber.toDouble()
+            "*" -> finalNumber = oldNumber.toDouble()  * newNumber.toDouble()
+            "-" -> finalNumber = oldNumber.toDouble()  - newNumber.toDouble()
+            "+" -> finalNumber = oldNumber.toDouble()  + newNumber.toDouble()
+        }
+        etShowNumber.setText(finalNumber.toString())
+        isNewOp = true
+    }
+
+    fun btnPercent(view:View) {
+        val number:Double = etShowNumber.text.toString().toDouble() / 100
+        etShowNumber.setText(number.toString())
+        isNewOp = true
+    }
+
+    fun btnClean(view: View) {
+        etShowNumber.setText("0")
+        isNewOp = true
     }
 }
